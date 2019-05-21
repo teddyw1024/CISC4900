@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 const axios = require("axios");
-const { ActivityHandler, MessageFactory } = require('botbuilder');
+const { ActivityHandler, MessageFactory, CardFactory } = require('botbuilder');
 
 class MyBot extends ActivityHandler {
     constructor() {
@@ -257,16 +257,79 @@ class MyBot extends ActivityHandler {
         });
         // console.log("message ", message);
         for (let ele in message) {
-            let results = `Job title is ${message[ele].title}
-                            \nJob ID: ${message[ele].jobId}
-                            \nDiffculty Level: ${message[ele].level}
-                            \nAgency:${message[ele].agency}
-                            \nFull/Part Time: ${message[ele].fp}
-                            \nSalary from:${message[ele].from}
-                            \nSalary to:${message[ele].to}
-                            \nHow to apply:${message[ele].apply}
-                            `;
-          await context.sendActivity(results);
+          //   let results = `Job title is ${message[ele].title}
+          //                   \nJob ID: ${message[ele].jobId}
+          //                   \nDiffculty Level: ${message[ele].level}
+          //                   \nAgency:${message[ele].agency}
+          //                   \nFull/Part Time: ${message[ele].fp}
+          //                   \nSalary from:${message[ele].from}
+          //                   \nSalary to:${message[ele].to}
+          //                   \nHow to apply:${message[ele].apply}
+          //                   `;
+          // await context.sendActivity(results);
+
+          
+          let card = CardFactory.adaptiveCard({
+              "type": "AdaptiveCard",
+              "body": [
+                  {
+                      "type": "TextBlock",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "text": "Job Result List"
+                  },
+                  {
+                      "type": "FactSet",
+                      "facts": [
+                          {
+                              "title": "Job ID:",
+                              "value": `${message[ele].jobId}`
+                          },
+                          {
+                              "title": "Job Title",
+                              "value": `${message[ele].title}`
+                          },
+                          {
+                              "title": "Difficulty:",
+                              "value": `${message[ele].level}`
+                          },
+                          {
+                              "title": "Agency:",
+                              "value": `${message[ele].agency}`
+                          },
+                          {
+                              "title": "Full/Part Time:",
+                              "value": `${message[ele].fp}`
+                          },
+                          {
+                              "title": "Salary From",
+                              "value": `${message[ele].from}`
+                          },
+                          {
+                              "title": "Salary To",
+                              "value": `${message[ele].to}`
+                          },
+                          {
+                              "title": "How to apply",
+                              "value": `${message[ele].apply}`
+                          }
+                      ]
+                  }
+              ],
+              "actions": [
+                  {
+                      "type": "Action.OpenUrl",
+                      "title": "Apply",
+                      "url": `https://a127-jobs.nyc.gov/index_new.html?keyword=${message[ele].jobId}`
+                  }
+              ],
+              "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+              "version": "1.0"
+          });
+          let newcard = MessageFactory.attachment(card);
+          await context.sendActivity(newcard);
+          //await context.sendActivity("");
+          console.log("print card object");
         }
       }
 
@@ -307,16 +370,79 @@ class MyBot extends ActivityHandler {
         });
         // console.log("message ", message);
         for (let ele in message) {
-            let results = `Job title is ${message[ele].title}
-                            \nJob ID: ${message[ele].jobId}
-                            \nDiffculty Level: ${message[ele].level}
-                            \nAgency:${message[ele].agency}
-                            \nFull/Part Time: ${message[ele].fp}
-                            \nSalary from:${message[ele].from}
-                            \nSalary to:${message[ele].to}
-                            \nHow to apply:${message[ele].apply}
-                            `;
-          await context.sendActivity(results);
+          //   let results = `Job title is ${message[ele].title}
+          //                   \nJob ID: ${message[ele].jobId}
+          //                   \nDiffculty Level: ${message[ele].level}
+          //                   \nAgency:${message[ele].agency}
+          //                   \nFull/Part Time: ${message[ele].fp}
+          //                   \nSalary from:${message[ele].from}
+          //                   \nSalary to:${message[ele].to}
+          //                   \nHow to apply:${message[ele].apply}
+          //                   `;
+          // await context.sendActivity(results);
+
+          
+          let card = CardFactory.adaptiveCard({
+              "type": "AdaptiveCard",
+              "body": [
+                  {
+                      "type": "TextBlock",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "text": "Job Result List"
+                  },
+                  {
+                      "type": "FactSet",
+                      "facts": [
+                          {
+                              "title": "Job ID:",
+                              "value": `${message[ele].jobId}`
+                          },
+                          {
+                              "title": "Job Title",
+                              "value": `${message[ele].title}`
+                          },
+                          {
+                              "title": "Difficulty:",
+                              "value": `${message[ele].level}`
+                          },
+                          {
+                              "title": "Agency:",
+                              "value": `${message[ele].agency}`
+                          },
+                          {
+                              "title": "Full/Part Time:",
+                              "value": `${message[ele].fp}`
+                          },
+                          {
+                              "title": "Salary From",
+                              "value": `${message[ele].from}`
+                          },
+                          {
+                              "title": "Salary To",
+                              "value": `${message[ele].to}`
+                          },
+                          {
+                              "title": "How to apply",
+                              "value": `${message[ele].apply}`
+                          }
+                      ]
+                  }
+              ],
+              "actions": [
+                  {
+                      "type": "Action.OpenUrl",
+                      "title": "Apply",
+                      "url": `https://a127-jobs.nyc.gov/index_new.html?keyword=${message[ele].jobId}`
+                  }
+              ],
+              "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+              "version": "1.0"
+          });
+          let newcard = MessageFactory.attachment(card);
+          await context.sendActivity(newcard);
+          //await context.sendActivity("");
+          console.log("print card object");
         }
       }
 
@@ -356,16 +482,79 @@ class MyBot extends ActivityHandler {
         });
         // console.log("message ", message);
         for (let ele in message) {
-            let results = `Job title is ${message[ele].title}
-                            \nJob ID: ${message[ele].jobId}
-                            \nDiffculty Level: ${message[ele].level}
-                            \nAgency:${message[ele].agency}
-                            \nFull/Part Time: ${message[ele].fp}
-                            \nSalary from:${message[ele].from}
-                            \nSalary to:${message[ele].to}
-                            \nHow to apply:${message[ele].apply}
-                            `;
-          await context.sendActivity(results);
+          //   let results = `Job title is ${message[ele].title}
+          //                   \nJob ID: ${message[ele].jobId}
+          //                   \nDiffculty Level: ${message[ele].level}
+          //                   \nAgency:${message[ele].agency}
+          //                   \nFull/Part Time: ${message[ele].fp}
+          //                   \nSalary from:${message[ele].from}
+          //                   \nSalary to:${message[ele].to}
+          //                   \nHow to apply:${message[ele].apply}
+          //                   `;
+          // await context.sendActivity(results);
+
+          
+          let card = CardFactory.adaptiveCard({
+              "type": "AdaptiveCard",
+              "body": [
+                  {
+                      "type": "TextBlock",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "text": "Job Result List"
+                  },
+                  {
+                      "type": "FactSet",
+                      "facts": [
+                          {
+                              "title": "Job ID:",
+                              "value": `${message[ele].jobId}`
+                          },
+                          {
+                              "title": "Job Title",
+                              "value": `${message[ele].title}`
+                          },
+                          {
+                              "title": "Difficulty:",
+                              "value": `${message[ele].level}`
+                          },
+                          {
+                              "title": "Agency:",
+                              "value": `${message[ele].agency}`
+                          },
+                          {
+                              "title": "Full/Part Time:",
+                              "value": `${message[ele].fp}`
+                          },
+                          {
+                              "title": "Salary From",
+                              "value": `${message[ele].from}`
+                          },
+                          {
+                              "title": "Salary To",
+                              "value": `${message[ele].to}`
+                          },
+                          {
+                              "title": "How to apply",
+                              "value": `${message[ele].apply}`
+                          }
+                      ]
+                  }
+              ],
+              "actions": [
+                  {
+                      "type": "Action.OpenUrl",
+                      "title": "Apply",
+                      "url": `https://a127-jobs.nyc.gov/index_new.html?keyword=${message[ele].jobId}`
+                  }
+              ],
+              "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+              "version": "1.0"
+          });
+          let newcard = MessageFactory.attachment(card);
+          await context.sendActivity(newcard);
+          //await context.sendActivity("");
+          console.log("print card object");
         }
       }
       
@@ -405,16 +594,79 @@ class MyBot extends ActivityHandler {
         });
         // console.log("message ", message);
         for (let ele in message) {
-            let results = `Job title is ${message[ele].title}
-                            \nJob ID: ${message[ele].jobId}
-                            \nDiffculty Level: ${message[ele].level}
-                            \nAgency:${message[ele].agency}
-                            \nFull/Part Time: ${message[ele].fp}
-                            \nSalary from:${message[ele].from}
-                            \nSalary to:${message[ele].to}
-                            \nHow to apply:${message[ele].apply}
-                            `;
-          await context.sendActivity(results);
+          //   let results = `Job title is ${message[ele].title}
+          //                   \nJob ID: ${message[ele].jobId}
+          //                   \nDiffculty Level: ${message[ele].level}
+          //                   \nAgency:${message[ele].agency}
+          //                   \nFull/Part Time: ${message[ele].fp}
+          //                   \nSalary from:${message[ele].from}
+          //                   \nSalary to:${message[ele].to}
+          //                   \nHow to apply:${message[ele].apply}
+          //                   `;
+          // await context.sendActivity(results);
+
+          
+          let card = CardFactory.adaptiveCard({
+              "type": "AdaptiveCard",
+              "body": [
+                  {
+                      "type": "TextBlock",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "text": "Job Result List"
+                  },
+                  {
+                      "type": "FactSet",
+                      "facts": [
+                          {
+                              "title": "Job ID:",
+                              "value": `${message[ele].jobId}`
+                          },
+                          {
+                              "title": "Job Title",
+                              "value": `${message[ele].title}`
+                          },
+                          {
+                              "title": "Difficulty:",
+                              "value": `${message[ele].level}`
+                          },
+                          {
+                              "title": "Agency:",
+                              "value": `${message[ele].agency}`
+                          },
+                          {
+                              "title": "Full/Part Time:",
+                              "value": `${message[ele].fp}`
+                          },
+                          {
+                              "title": "Salary From",
+                              "value": `${message[ele].from}`
+                          },
+                          {
+                              "title": "Salary To",
+                              "value": `${message[ele].to}`
+                          },
+                          {
+                              "title": "How to apply",
+                              "value": `${message[ele].apply}`
+                          }
+                      ]
+                  }
+              ],
+              "actions": [
+                  {
+                      "type": "Action.OpenUrl",
+                      "title": "Apply",
+                      "url": `https://a127-jobs.nyc.gov/index_new.html?keyword=${message[ele].jobId}`
+                  }
+              ],
+              "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+              "version": "1.0"
+          });
+          let newcard = MessageFactory.attachment(card);
+          await context.sendActivity(newcard);
+          //await context.sendActivity("");
+          console.log("print card object");
         }
       }
 
@@ -454,16 +706,79 @@ class MyBot extends ActivityHandler {
         });
         // console.log("message ", message);
         for (let ele in message) {
-            let results = `Job title is ${message[ele].title}
-                            \nJob ID: ${message[ele].jobId}
-                            \nDiffculty Level: ${message[ele].level}
-                            \nAgency:${message[ele].agency}
-                            \nFull/Part Time: ${message[ele].fp}
-                            \nSalary from:${message[ele].from}
-                            \nSalary to:${message[ele].to}
-                            \nHow to apply:${message[ele].apply}
-                            `;
-          await context.sendActivity(results);
+          //   let results = `Job title is ${message[ele].title}
+          //                   \nJob ID: ${message[ele].jobId}
+          //                   \nDiffculty Level: ${message[ele].level}
+          //                   \nAgency:${message[ele].agency}
+          //                   \nFull/Part Time: ${message[ele].fp}
+          //                   \nSalary from:${message[ele].from}
+          //                   \nSalary to:${message[ele].to}
+          //                   \nHow to apply:${message[ele].apply}
+          //                   `;
+          // await context.sendActivity(results);
+
+          
+          let card = CardFactory.adaptiveCard({
+              "type": "AdaptiveCard",
+              "body": [
+                  {
+                      "type": "TextBlock",
+                      "size": "Large",
+                      "weight": "Bolder",
+                      "text": "Job Result List"
+                  },
+                  {
+                      "type": "FactSet",
+                      "facts": [
+                          {
+                              "title": "Job ID:",
+                              "value": `${message[ele].jobId}`
+                          },
+                          {
+                              "title": "Job Title",
+                              "value": `${message[ele].title}`
+                          },
+                          {
+                              "title": "Difficulty:",
+                              "value": `${message[ele].level}`
+                          },
+                          {
+                              "title": "Agency:",
+                              "value": `${message[ele].agency}`
+                          },
+                          {
+                              "title": "Full/Part Time:",
+                              "value": `${message[ele].fp}`
+                          },
+                          {
+                              "title": "Salary From",
+                              "value": `${message[ele].from}`
+                          },
+                          {
+                              "title": "Salary To",
+                              "value": `${message[ele].to}`
+                          },
+                          {
+                              "title": "How to apply",
+                              "value": `${message[ele].apply}`
+                          }
+                      ]
+                  }
+              ],
+              "actions": [
+                  {
+                      "type": "Action.OpenUrl",
+                      "title": "Apply",
+                      "url": `https://a127-jobs.nyc.gov/index_new.html?keyword=${message[ele].jobId}`
+                  }
+              ],
+              "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+              "version": "1.0"
+          });
+          let newcard = MessageFactory.attachment(card);
+          await context.sendActivity(newcard);
+          //await context.sendActivity("");
+          console.log("print card object");
         }
       }
 
