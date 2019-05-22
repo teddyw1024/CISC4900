@@ -19,6 +19,7 @@ class MyBot extends ActivityHandler {
             const postingTypeArr = ["Internal", "External"]
             const levelArr = ["0", "1", "2", "3", "4", "4A", "4B", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
             const fpIndicatorArr = ["F", "P"]
+            const numberArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"]
 
             if(this.name === null){
                 this.name = text;
@@ -36,19 +37,19 @@ class MyBot extends ActivityHandler {
                 await next();
             }else if(this.number === null){
               console.log("3.number is empty");
-                if (typeof parseInt(text) != "number") {
-                  console.log("4. This is not number");
-                  await context.sendActivity("Sorry, please enter a number for results.")
+                if (numberArr.includes(text)) {
+                    console.log("4. This is number type");
+                    //await context.sendActivity(`${this.name}, how many results you want to see?`);
+                    //await this.sendSuggestednumber(context);
+                    this.number = text;
+                    console.log("5. set text as number");
+                    console.log("number is equal");console.log(this.number);
+                    await context.sendActivity(`You have choose to get ${this.number} of results`);
+                    await context.sendActivity(`Next I am going to ask you some questions for me to seach for jobs, enter anything to let me know you are ready:`);
+                    //await context.sendActivity("Please choose the search option from above")//can't run the next message autometicly, has enter message to trigger
                 }else{
-                  console.log("4. This is number type");
-                  //await context.sendActivity(`${this.name}, how many results you want to see?`);
-                  //await this.sendSuggestednumber(context);
-                  this.number = text;
-                  console.log("5. set text as number");
-                  console.log("number is equal");console.log(this.number);
-                  await context.sendActivity(`You have choose to get ${this.number} of results`);
-                  await context.sendActivity(`Next I am going to ask you some questions for me to seach for jobs, enter anything to let me know you are ready:`);
-                  //await context.sendActivity("Please choose the search option from above")//can't run the next message autometicly, has enter message to trigger
+                    console.log("4. This is a valid result number");
+                    await context.sendActivity("Sorry, please enter a valid number for results.")
                 }
             
               }else if(this.index === null){
@@ -280,6 +281,7 @@ class MyBot extends ActivityHandler {
                   },
                   {
                       "type": "FactSet",
+                      "spacing": "ExtraLarge",
                       "facts": [
                           {
                               "title": "Job ID:",
@@ -393,6 +395,7 @@ class MyBot extends ActivityHandler {
                   },
                   {
                       "type": "FactSet",
+                      "spacing": "ExtraLarge",
                       "facts": [
                           {
                               "title": "Job ID:",
@@ -505,6 +508,7 @@ class MyBot extends ActivityHandler {
                   },
                   {
                       "type": "FactSet",
+                      "spacing": "ExtraLarge",
                       "facts": [
                           {
                               "title": "Job ID:",
@@ -608,6 +612,7 @@ class MyBot extends ActivityHandler {
           
           let card = CardFactory.adaptiveCard({
               "type": "AdaptiveCard",
+              "spacing": "ExtraLarge",
               "body": [
                   {
                       "type": "TextBlock",
@@ -729,6 +734,7 @@ class MyBot extends ActivityHandler {
                   },
                   {
                       "type": "FactSet",
+                      "spacing": "ExtraLarge",
                       "facts": [
                           {
                               "title": "Job ID:",
